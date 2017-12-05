@@ -1,28 +1,28 @@
-class piece:
+class Piece:
     def __init__(self, xpos, ypos):
         self.xpos = xpos
         self.ypos = ypos
 
-class pawn(piece):
+class Pawn(Piece):
     def __init__(self, xpos, ypos):
-        piece.__init__(xpos, ypos)
+        Piece.__init__(xpos, ypos)
 
-class rook(piece):
+class Rook(Piece):
     def __init__(self, xpos, ypos):
-        piece.__init__(xpos, ypos)
+        Piece.__init__(xpos, ypos)
 
-class knight(piece):
+class Knight(Piece):
     def __init__(self, xpos, ypos):
-        piece.__init__(xpos, ypos)
+        Piece.__init__(xpos, ypos)
 
-class bishop(piece):
+class Bishop(Piece):
     def __init__(self, xpos, ypos):
-        piece.__init__(xpos, ypos)
+        Piece.__init__(xpos, ypos)
 
-class queen(piece):
+class Queen(Piece):
     def __init__(self, xpos, ypos):
-        piece.__init__(xpos, ypos)
+        Piece.__init__(xpos, ypos)
 
-class king(piece):
+class King(Piece):
     def __init__(self, xpos, ypos):
-        piece.__init__(xpos, ypos)
+        Piece.__init__(xpos, ypos)
