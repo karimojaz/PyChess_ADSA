@@ -1,11 +1,12 @@
-from board import Square
+from board import *
 
 class Piece:
 
-    def __init__(self, xpos, ypos):
+    def __init__(self, xpos, ypos, owner):
         self.xpos = xpos
         self.ypos = ypos
-        square = Square(xpos, ypos)
+        self.square = Square(xpos, ypos)
+        self.owner = owner
 
     def moveTo(newSquare):
         self.square.occupyingPiece = None
@@ -15,6 +16,7 @@ class Pawn(Piece):
 
     def __init__(self, xpos, ypos):
         Piece.__init__(xpos, ypos)
+        self.hasMoved = False
 
 class Rook(Piece):
 
