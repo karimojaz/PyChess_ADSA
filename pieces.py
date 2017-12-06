@@ -23,26 +23,26 @@ class Pawn(Piece):
 
 class Rook(Piece):
 
-    def __init__(self, xpos, ypos):
-        Piece.__init__(xpos, ypos)
+    def __init__(self, xpos, ypos, owner):
+        Piece.__init__(self, xpos, ypos, owner)
         self.sprite = pygame.image.load("imgres/" + ("br.png" if (self.owner.color == "black") else "wr.png")).convert_alpha()
 
 class Knight(Piece):
 
-    def __init__(self, xpos, ypos):
-        Piece.__init__(xpos, ypos)
+    def __init__(self, xpos, ypos, owner):
+        Piece.__init__(self, xpos, ypos, owner)
 
 class Bishop(Piece):
 
-    def __init__(self, xpos, ypos):
-        Piece.__init__(xpos, ypos)
+    def __init__(self, xpos, ypos, owner):
+        Piece.__init__(self, xpos, ypos, owner)
 
 class Queen(Piece):
 
-    def __init__(self, xpos, ypos):
-        Piece.__init__(xpos, ypos)
+    def __init__(self, xpos, ypos, owner):
+        Piece.__init__(self, xpos, ypos, owner)
 
 class King(Piece):
 
-    def __init__(self, xpos, ypos):
-        Piece.__init__(xpos, ypos)
+    def __init__(self, xpos, ypos, owner):
+        Piece.__init__(self, xpos, ypos, owner)
