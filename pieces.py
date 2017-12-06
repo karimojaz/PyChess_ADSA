@@ -1,12 +1,12 @@
 import pygame
-from board import *
+import board
 
 class Piece:
 
     def __init__(self, xpos, ypos, owner):
         self.xpos = xpos
         self.ypos = ypos
-        self.square = Square(xpos, ypos)
+        self.square = board.Square(xpos, ypos)
         self.owner = owner
         self.sprite = None
 

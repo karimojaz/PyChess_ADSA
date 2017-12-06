@@ -1,4 +1,4 @@
-from pieces import *
+import pieces
 
 class Square:
 
@@ -30,7 +30,7 @@ class PieceSet:
     def __init__(self, player):
         self.pawns = []
         for i in range(8):
-            self.pawns.append(Pawn(i+1, 6 if (player.color == "black") else 1, player))
+            self.pawns.append(pieces.Pawn(i+1, 6 if (player.color == "black") else 1, player))
 
 class Board:
 
