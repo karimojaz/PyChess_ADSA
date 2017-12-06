@@ -19,6 +19,22 @@ class Square:
             7 : 'h'
         } [self.xpos] + str(self.ypos+1)
 
+class Player:
+
+    def __init__(self, color):
+        self.color = color
+        #self.pieceSet = PieceSet(self)
+
+class PieceSet:
+
+    def __init__(self, player):
+        if player.color == "black":
+            pawnRow = 6
+        else:
+            pawnRow = 1
+        for i in range(8):
+            self.pawns.append(pawn(i+1, pawnRow))
+
 class Board:
 
     def __init__(self):
@@ -30,19 +46,3 @@ class Board:
     def __str__(self):
         for s in self.squares:
             print(str(s) + " -> " + str(s.occupyingPiece))
-
-class Player:
-
-    def __init__(self, color):
-        self.color = color
-        self.pieceSet = PieceSet(self)
-
-class PieceSet:
-
-    def __init__(self, player):
-        if player.color == "black":
-            pawnRow = 6
-        else:
-            pawnRow = 1
-        for i in range(8):
-            self.pawns.append(pawn(i+1, pawnRow))

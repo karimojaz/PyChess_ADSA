@@ -12,5 +12,10 @@ def initializeUI():
     window.blit(bg, (0,0))
     board = pygame.image.load("imgres/board.jpg").convert()
     window.blit(board, (CONST_BOARD_OFFSET, CONST_BOARD_OFFSET))
+    pygame.display.flip()
 
+    return window
+
+def putSprite(window, piece):
+    window.blit(piece.sprite, (piece.xpos, piece.ypos))
     pygame.display.flip()
