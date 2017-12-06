@@ -9,7 +9,7 @@ from board import *
 window = initializeUI()
 
 b = Board()
-print(b.getSquareAt(4,4))
+
 
 keepon = 1
 while keepon :
@@ -18,4 +18,4 @@ while keepon :
             keepon = 0
         if event.type == MOUSEBUTTONDOWN :
             if event.button == 1 :
-                putSprite(window, Pawn(event.pos[0], event.pos[1], Player("black")))
+                displayPiecesOfBoard(window, b)

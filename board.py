@@ -17,7 +17,7 @@ class Square:
             5 : 'f',
             6 : 'g',
             7 : 'h'
-        } [self.xpos] + str(self.ypos+1)
+        } [self.xpos] + str(self.ypos+1) + " -> " + str(self.occupyingPiece) + "\n"
 
 class Player:
 
@@ -41,24 +41,33 @@ class PieceSet:
         self.rooks.append(pieces.Rook(0, 7 if (player.color == "black") else 0, player))
         self.rooks.append(pieces.Rook(7, 7 if (player.color == "black") else 0, player))
         for i in range(8):
-            self.pawns.append(pieces.Pawn(i+1, 6 if (player.color == "black") else 1, player))
+            self.pawns.append(pieces.Pawn(i, 6 if (player.color == "black") else 1, player))
 
     def getPieces(self):
-        return self.pawns + self.bishops + self.knights + self.rooks + self.queen + self.king
+        return self.pawns + self.bishops + self.knights + self.rooks + [self.queen, self.king]
 
 class Board:
 
     def __init__(self):
-        WhitePlayer = Player("white")
-        BlackPlayer = Player("black")
+        self.WhitePlayer = Player("white")
+        self.BlackPlayer = Player("black")
         self.squares = []
+
         for x in range(8):
             for y in range(8):
                 self.squares.append(Square(x, y))
 
+        for p in self.WhitePlayer.pieceSet.getPieces():
+            self.getSquareAt(p.xpos, p.ypos).occupyingPiece = p
+
+        for p in self.BlackPlayer.pieceSet.getPieces():
+            self.getSquareAt(p.xpos, p.ypos).occupyingPiece = p
+
     def __str__(self):
+        result = ""
         for s in self.squares:
-            print(str(s) + " -> " + str(s.occupyingPiece))
+            result += str(s)
+        return result
 
     def getSquareAt(self, xpos, ypos):
         for s in self.squares:

@@ -17,5 +17,13 @@ def initializeUI():
     return window
 
 def putSprite(window, piece):
-    window.blit(piece.sprite, (piece.xpos, piece.ypos))
+    window.blit(piece.sprite, convertToCoord(piece.xpos, piece.ypos))
+
+def convertToCoord(xpos, ypos):
+    return (CONST_SQUARE_DIM * xpos + CONST_BOARD_OFFSET, CONST_SQUARE_DIM * (7-ypos) + CONST_BOARD_OFFSET)
+
+def displayPiecesOfBoard(window, board):
+    for s in board.squares:
+        if(s.occupyingPiece):
+            putSprite(window, s.occupyingPiece)
     pygame.display.flip()
