@@ -4,6 +4,7 @@ import pygame
 from pygame.locals import *
 from gui import *
 from pieces import *
+from board import *
 
 window = initializeUI()
 
@@ -14,4 +15,4 @@ while keepon :
             keepon = 0
         if event.type == MOUSEBUTTONDOWN :
             if event.button == 1 :
-                putSprite(window, Pawn(event.pos[0], event.pos[1], Player("white")))
+                putSprite(window, Queen(event.pos[0], event.pos[1], Player("black")))

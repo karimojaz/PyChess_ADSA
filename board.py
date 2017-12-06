@@ -23,17 +23,14 @@ class Player:
 
     def __init__(self, color):
         self.color = color
-        #self.pieceSet = PieceSet(self)
+        self.pieceSet = PieceSet(self)
 
 class PieceSet:
 
     def __init__(self, player):
-        if player.color == "black":
-            pawnRow = 6
-        else:
-            pawnRow = 1
+        self.pawns = []
         for i in range(8):
-            self.pawns.append(pawn(i+1, pawnRow))
+            self.pawns.append(Pawn(i+1, 6 if (player.color == "black") else 1, player))
 
 class Board:
 
