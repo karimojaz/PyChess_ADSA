@@ -46,7 +46,6 @@ class PieceSet:
     def getPieces(self):
         return self.pawns + self.bishops + self.knights + self.rooks + self.queen + self.king
 
-
 class Board:
 
     def __init__(self):
