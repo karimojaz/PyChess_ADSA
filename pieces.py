@@ -10,7 +10,7 @@ class Piece:
         self.owner = owner
         self.sprite = None
 
-    def moveTo(newSquare):
+    def moveTo(self, newSquare):
         self.square.occupyingPiece = None
         self.square = newSquare
 
