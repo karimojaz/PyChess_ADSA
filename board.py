@@ -59,9 +59,11 @@ class Board:
 
         for p in self.WhitePlayer.pieceSet.getPieces():
             self.getSquareAt(p.xpos, p.ypos).occupyingPiece = p
+            p.square = self.getSquareAt(p.xpos, p.ypos)
 
         for p in self.BlackPlayer.pieceSet.getPieces():
             self.getSquareAt(p.xpos, p.ypos).occupyingPiece = p
+            p.square = self.getSquareAt(p.xpos, p.ypos)
 
     def __str__(self):
         result = ""

@@ -13,6 +13,9 @@ class Piece:
     def moveTo(self, newSquare):
         self.square.occupyingPiece = None
         self.square = newSquare
+        self.square.occupyingPiece = self
+        self.xpos = self.square.xpos
+        self.ypos = self.square.ypos
 
 class Pawn(Piece):
 
