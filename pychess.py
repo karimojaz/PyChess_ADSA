@@ -7,8 +7,8 @@ from pieces import *
 from board import *
 
 window = initializeUI()
-
 b = Board()
+
 displayPiecesOfBoard(window, b)
 grabbedPiece = None
 
@@ -21,10 +21,13 @@ while running :
         if event.type == MOUSEBUTTONDOWN:
             if event.button == 1 and clickIsOnTheChessboard(event):
                 if(grabbedPiece == None):
-                    grabbedPiece = grabAPiece(event.pos[0], event.pos[1], b)
+                    p = grabAPiece(event.pos[0], event.pos[1], b)
+                    if(p is not None and p.owner == b.currentPlayer):
+                        grabbedPiece = p
                 else:
                     grabbedPiece.moveTo(b.getSquareAt(convertFromCoord(event.pos[0]), 7 - convertFromCoord(event.pos[1])))
                     grabbedPiece = None
+                    b.switchPlayers()
                     flushBoard(window, b)
 
         if event.type == MOUSEMOTION and clickIsOnTheChessboard(event):

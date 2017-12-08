@@ -1,4 +1,5 @@
 import pieces
+import moves
 
 class Square:
 
@@ -52,6 +53,7 @@ class Board:
         self.WhitePlayer = Player("white")
         self.BlackPlayer = Player("black")
         self.squares = []
+        self.currentPlayer = self.WhitePlayer
 
         for x in range(8):
             for y in range(8):
@@ -75,3 +77,9 @@ class Board:
         for s in self.squares:
             if(s.xpos == xpos and s.ypos == ypos):
                 return s
+
+    def switchPlayers(self):
+        self.currentPlayer = self.WhitePlayer if (self.currentPlayer is self.BlackPlayer) else self.BlackPlayer
+
+    def getPosition(self):
+        return moves.Position(self.squares, self.currentPlayer)
