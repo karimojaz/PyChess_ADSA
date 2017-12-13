@@ -20,18 +20,23 @@ while running :
 
         if event.type == MOUSEBUTTONDOWN:
             if event.button == 1 and clickIsOnTheChessboard(event):
+                xCoord = event.pos[0]
+                yCoord = event.pos[1]
                 if(grabbedPiece == None):
-                    p = grabAPiece(event.pos[0], event.pos[1], b)
+                    p = grabAPiece(xCoord, yCoord, b)
                     if(p is not None and p.owner == b.currentPlayer):
                         grabbedPiece = p
-                else:
-                    grabbedPiece.moveTo(b.getSquareAt(convertFromCoord(event.pos[0]), 7 - convertFromCoord(event.pos[1])))
+                elif grabbedPiece.isMoveLegal(grabbedPiece.square, b.getSquareAt(convertFromCoord(xCoord), 7 - convertFromCoord(yCoord))):
+                    if b.getSquareAt(convertFromCoord(xCoord), 7 - convertFromCoord(yCoord)) is not grabbedPiece.square:
+                        b.switchPlayers()
+                    grabbedPiece.moveTo(b.getSquareAt(convertFromCoord(xCoord), 7 - convertFromCoord(yCoord)))
                     grabbedPiece = None
-                    b.switchPlayers()
                     flushBoard(window, b)
 
         if event.type == MOUSEMOTION and clickIsOnTheChessboard(event):
-            if(grabbedPiece != None):
-                grabbedPiece.xpos = convertFromCoord(event.pos[0])
-                grabbedPiece.ypos = 7 - convertFromCoord(event.pos[1])
+            x = convertFromCoord(event.pos[0])
+            y = 7 - convertFromCoord(event.pos[1])
+            if(grabbedPiece is not None and grabbedPiece.isMoveLegal(grabbedPiece.square, b.getSquareAt(x, y))):
+                grabbedPiece.xpos = x
+                grabbedPiece.ypos = y
                 flushBoard(window, b)

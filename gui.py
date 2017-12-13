@@ -23,11 +23,13 @@ def convertToCoord(xpos, ypos):
 
 def convertFromCoord(coord):
     return ((coord - CONST_BOARD_OFFSET) - (coord % CONST_SQUARE_DIM)) // CONST_SQUARE_DIM
-#REGLE CA GROS FDP
 
 def displayPiecesOfBoard(window, board):
     for s in board.squares:
-        if(s.occupyingPiece):
+        if(s.occupyingPiece and s.occupyingPiece.owner.color is not board.currentPlayer.color):
+            putSprite(window, s.occupyingPiece)
+    for s in board.squares:
+        if(s.occupyingPiece and s.occupyingPiece.owner.color is board.currentPlayer.color):
             putSprite(window, s.occupyingPiece)
     pygame.display.flip()
 

@@ -20,11 +20,17 @@ class Square:
             7 : 'h'
         } [self.xpos] + str(self.ypos+1) + " -> " + str(self.occupyingPiece) + "\n"
 
+    def isFree(self):
+        return self.occupyingPiece is None
+
 class Player:
 
-    def __init__(self, color):
+    def __init__(self, color, b):
         self.color = color
         self.pieceSet = PieceSet(self)
+        self.capturedPieces = []
+        self.b = b
+        self.isAI = False
 
 class PieceSet:
 
@@ -50,8 +56,8 @@ class PieceSet:
 class Board:
 
     def __init__(self):
-        self.WhitePlayer = Player("white")
-        self.BlackPlayer = Player("black")
+        self.WhitePlayer = Player("white", self)
+        self.BlackPlayer = Player("black", self)
         self.squares = []
         self.currentPlayer = self.WhitePlayer
 
@@ -83,3 +89,43 @@ class Board:
 
     def getPosition(self):
         return moves.Position(self.squares, self.currentPlayer)
+
+def getFirstOccupiedSquareTowards(direction, piece, b):
+    if direction is "l":
+        dx = -1
+        dy = 0
+    elif direction is "lup":
+        dx = -1
+        dy = 1
+    elif direction is "up":
+        dx = 0
+        dy = 1
+    elif direction is "rup":
+        dx = 1
+        dy = 1
+    elif direction is "r":
+        dx = 1
+        dy = 0
+    elif direction is "rdwn":
+        dx = 1
+        dy = -1
+    elif direction is "dwn":
+        dx = 0
+        dy = -1
+    elif direction is "ldwn":
+        dx = -1
+        dy = -1
+
+    returnedPiece = None
+    xoffset = dx
+    yoffset = dy
+
+    while(returnedPiece is None):
+        s = b.getSquareAt(piece.xpos + xoffset, piece.ypos + yoffset)
+        if s is None:
+            return None
+        returnedPiece = s.occupyingPiece
+        xoffset += dx
+        yoffset += dy
+
+    return returnedPiece
