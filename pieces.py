@@ -20,14 +20,6 @@ class Piece:
         self.xpos = self.square.xpos
         self.ypos = self.square.ypos
 
-    def checkBasicLegality(self, destSquare):
-        if destSquare.isFree():
-            return True
-        elif destSquare.occupyingPiece is self:
-            return True
-        else:
-            return False
-
 class Pawn(Piece):
 
     def __init__(self, xpos, ypos, owner):
