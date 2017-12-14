@@ -32,6 +32,14 @@ class Player:
         self.b = b
         self.isAI = False
 
+    def getControlledSquares(self):
+        cs = []
+        for p in self.pieceSet.getPieces():
+            for s in self.b.squares:
+                if s not in cs and p.controls(s) and (s.occupyingPiece is None or s.occupyingPiece.owner is not self):
+                    cs.append(s)
+        return cs
+
 class PieceSet:
 
     def __init__(self, player):
@@ -90,6 +98,9 @@ class Board:
     def getPosition(self):
         return moves.Position(self.squares, self.currentPlayer)
 
+    def getOpponent(self, p):
+        return self.WhitePlayer if p.color is "black" else self.BlackPlayer
+
 def getFirstOccupiedSquareTowards(direction, piece, b):
     if direction is "l":
         dx = -1
@@ -115,15 +126,17 @@ def getFirstOccupiedSquareTowards(direction, piece, b):
     elif direction is "ldwn":
         dx = -1
         dy = -1
+    else:
+        return
 
     returnedPiece = None
     xoffset = dx
     yoffset = dy
 
     while(returnedPiece is None):
-        s = b.getSquareAt(piece.xpos + xoffset, piece.ypos + yoffset)
+        s = b.getSquareAt(piece.square.xpos + xoffset, piece.square.ypos + yoffset)
         if s is None:
-            return None
+            return
         returnedPiece = s.occupyingPiece
         xoffset += dx
         yoffset += dy

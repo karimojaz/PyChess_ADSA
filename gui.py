@@ -37,6 +37,10 @@ def flushBoard(window, board):
     window.blit(pygame.image.load("imgres/board.jpg").convert(), (CONST_BOARD_OFFSET, CONST_BOARD_OFFSET))
     displayPiecesOfBoard(window, board)
     print(board)
+    if board.WhitePlayer.pieceSet.king.isInCheck():
+        print("WHITE CHECKED")
+    if board.BlackPlayer.pieceSet.king.isInCheck():
+        print("BLACK CHECKED")
 
 def clickIsOnTheChessboard(event):
     return (event.pos[0] > CONST_BOARD_OFFSET and event.pos[0] <= (CONST_BOARD_OFFSET + 8 * CONST_SQUARE_DIM) and event.pos[1] > CONST_BOARD_OFFSET and event.pos[1] <= (CONST_BOARD_OFFSET + 8 * CONST_SQUARE_DIM))
