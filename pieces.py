@@ -14,12 +14,27 @@ class Piece:
     def moveTo(self, newSquare):
         if newSquare is not self.square:
             self.hasMoved = True
+        elif self.owner.pieceSet.king.isInCheck():
+            return
+        capturedPiece = None
+        if newSquare.occupyingPiece is not None:
+            capturedPiece = newSquare.occupyingPiece
         oldSquare = self.square
         oldSquare.occupyingPiece = None
         self.square = newSquare
         self.square.occupyingPiece = self
         self.xpos = self.square.xpos
         self.ypos = self.square.ypos
+        if self.owner.pieceSet.king.isInCheck():
+            self.square.occupyingPiece = capturedPiece
+            self.square = oldSquare
+            self.square.occupyingPiece = self
+            self.xpos = self.square.xpos
+            self.ypos = self.square.ypos
+            self.owner.b.switchPlayers()
+        elif capturedPiece is not None:
+            if capturedPiece.owner.color is not self.owner.color:
+                self.owner.b.getOpponent(self.owner).pieceSet.allPieces.remove(capturedPiece)
 
 class Pawn(Piece):
 
@@ -35,10 +50,10 @@ class Pawn(Piece):
                 return True
         else:
             if(destSquare.xpos is fromSquare.xpos):
-                if abs(destSquare.ypos - fromSquare.ypos) is 1:
+                y = 1 if self.owner.color is "white" else -1
+                if destSquare.ypos - fromSquare.ypos is y:
                     return True
                 if abs(destSquare.ypos - fromSquare.ypos) is 2 and not self.hasMoved:
-                    y = 1 if self.owner.color is "white" else -1
                     if self.owner.b.getSquareAt(fromSquare.xpos, fromSquare.ypos + y).occupyingPiece is None:
                         return True
         return False

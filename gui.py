@@ -46,4 +46,5 @@ def clickIsOnTheChessboard(event):
     return (event.pos[0] > CONST_BOARD_OFFSET and event.pos[0] <= (CONST_BOARD_OFFSET + 8 * CONST_SQUARE_DIM) and event.pos[1] > CONST_BOARD_OFFSET and event.pos[1] <= (CONST_BOARD_OFFSET + 8 * CONST_SQUARE_DIM))
 
 def grabAPiece(xpos, ypos, board):
-    return board.getSquareAt(convertFromCoord(xpos), 7 - convertFromCoord(ypos)).occupyingPiece
+    if board.getSquareAt(convertFromCoord(xpos), 7 - convertFromCoord(ypos)) is not None:
+        return board.getSquareAt(convertFromCoord(xpos), 7 - convertFromCoord(ypos)).occupyingPiece

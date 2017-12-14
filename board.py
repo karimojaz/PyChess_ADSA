@@ -34,7 +34,7 @@ class Player:
 
     def getControlledSquares(self):
         cs = []
-        for p in self.pieceSet.getPieces():
+        for p in self.pieceSet.allPieces:
             for s in self.b.squares:
                 if s not in cs and p.controls(s) and (s.occupyingPiece is None or s.occupyingPiece.owner is not self):
                     cs.append(s)
@@ -57,9 +57,21 @@ class PieceSet:
         self.rooks.append(pieces.Rook(7, 7 if (player.color == "black") else 0, player))
         for i in range(8):
             self.pawns.append(pieces.Pawn(i, 6 if (player.color == "black") else 1, player))
+        self.allPieces = self.pawns + self.bishops + self.knights + self.rooks + [self.queen, self.king]
 
-    def getPieces(self):
-        return self.pawns + self.bishops + self.knights + self.rooks + [self.queen, self.king]
+    def add(self, p):
+        if isinstance(p, pieces.King):
+            self.king = p
+        elif isinstance(p, pieces.Queen):
+            self.queen = p
+        elif isinstance(p, pieces.Pawn):
+            self.pawns.append(p)
+        elif isinstance(p, pieces.Knight):
+            self.knights.append(p)
+        elif isinstance(p, pieces.Bishop):
+            self.bishops.append(p)
+        elif isinstance(p, pieces.Rook):
+            self.rooks.append(p)
 
 class Board:
 
@@ -73,11 +85,11 @@ class Board:
             for y in range(8):
                 self.squares.append(Square(x, y))
 
-        for p in self.WhitePlayer.pieceSet.getPieces():
+        for p in self.WhitePlayer.pieceSet.allPieces:
             self.getSquareAt(p.xpos, p.ypos).occupyingPiece = p
             p.square = self.getSquareAt(p.xpos, p.ypos)
 
-        for p in self.BlackPlayer.pieceSet.getPieces():
+        for p in self.BlackPlayer.pieceSet.allPieces:
             self.getSquareAt(p.xpos, p.ypos).occupyingPiece = p
             p.square = self.getSquareAt(p.xpos, p.ypos)
 
