@@ -1,5 +1,6 @@
 import pygame
 import board
+import moves
 
 class Piece:
 
@@ -17,8 +18,9 @@ class Piece:
         elif self.owner.pieceSet.king.isInCheck():
             return
         capturedPiece = None
-        if newSquare.occupyingPiece is not None:
+        if newSquare.occupyingPiece is not None and newSquare.occupyingPiece.owner.color is not self.owner.color:
             capturedPiece = newSquare.occupyingPiece
+            capturedPiece.owner.pieceSet.allPieces.remove(capturedPiece)
         oldSquare = self.square
         oldSquare.occupyingPiece = None
         self.square = newSquare
@@ -32,9 +34,9 @@ class Piece:
             self.xpos = self.square.xpos
             self.ypos = self.square.ypos
             self.owner.b.switchPlayers()
-        elif capturedPiece is not None:
-            if capturedPiece.owner.color is not self.owner.color:
-                self.owner.b.getOpponent(self.owner).pieceSet.allPieces.remove(capturedPiece)
+            if capturedPiece is not None:
+                if capturedPiece.owner.color is not self.owner.color:
+                    self.owner.b.getOpponent(self.owner).pieceSet.add(capturedPiece)
 
 class Pawn(Piece):
 
@@ -109,10 +111,11 @@ class Knight(Piece):
         self.sprite = pygame.image.load("imgres/" + ("bn.png" if (self.owner.color == "black") else "wn.png")).convert_alpha()
 
     def isMoveLegal(self, fromSquare, destSquare):
-        if destSquare.occupyingPiece is self:
+        if destSquare is fromSquare:
             return True
-        if (destSquare.occupyingPiece is None or destSquare.occupyingPiece.owner.color is not self.owner.color) and (abs(destSquare.ypos - fromSquare.ypos) is 2 and abs(destSquare.xpos - fromSquare.xpos) is 1) or (abs(destSquare.ypos - fromSquare.ypos) is 1 and abs(destSquare.xpos - fromSquare.xpos) is 2):
-            return True
+        if (abs(destSquare.ypos - fromSquare.ypos) is 2 and abs(destSquare.xpos - fromSquare.xpos) is 1) or (abs(destSquare.ypos - fromSquare.ypos) is 1 and abs(destSquare.xpos - fromSquare.xpos) is 2):
+            if (destSquare.occupyingPiece is None or destSquare.occupyingPiece.owner.color is not self.owner.color):
+                return True
         return False
 
     def controls(self, s):

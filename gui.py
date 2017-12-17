@@ -1,4 +1,5 @@
 import pygame
+import moves
 
 CONST_BOARD_OFFSET = 68
 CONST_SQUARE_DIM = 82
@@ -37,10 +38,19 @@ def flushBoard(window, board):
     window.blit(pygame.image.load("imgres/board.jpg").convert(), (CONST_BOARD_OFFSET, CONST_BOARD_OFFSET))
     displayPiecesOfBoard(window, board)
     print(board)
+    i = 0
+    for m in moves.Position(board.currentPlayer, board.squares).computePossibleMoves():
+        print(m)
+        i+=1
+    print(str(i) + " positions evaluated")
     if board.WhitePlayer.pieceSet.king.isInCheck():
         print("WHITE CHECKED")
+        if len(moves.Position(board.WhitePlayer, board.squares).computePossibleMoves) is 0:
+            print("WHITE IS MATED")
     if board.BlackPlayer.pieceSet.king.isInCheck():
         print("BLACK CHECKED")
+        if len(moves.Position(board.BlackPlayer, board.squares).computePossibleMoves) is 0:
+            print("BLACK IS MATED")
 
 def clickIsOnTheChessboard(event):
     return (event.pos[0] > CONST_BOARD_OFFSET and event.pos[0] <= (CONST_BOARD_OFFSET + 8 * CONST_SQUARE_DIM) and event.pos[1] > CONST_BOARD_OFFSET and event.pos[1] <= (CONST_BOARD_OFFSET + 8 * CONST_SQUARE_DIM))
