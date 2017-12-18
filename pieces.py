@@ -20,7 +20,7 @@ class Piece:
         capturedPiece = None
         if newSquare.occupyingPiece is not None and newSquare.occupyingPiece.owner.color is not self.owner.color:
             capturedPiece = newSquare.occupyingPiece
-            capturedPiece.owner.pieceSet.allPieces.remove(capturedPiece)
+            capturedPiece.owner.pieceSet.erase(capturedPiece)
         oldSquare = self.square
         oldSquare.occupyingPiece = None
         self.square = newSquare
@@ -102,7 +102,9 @@ class Rook(Piece):
         return False
 
     def controls(self, s):
-        return self.isMoveLegal(self.square, s)
+        if self.isMoveLegal(self.square, s) and s is not self.square:
+            return True
+        
 
 class Knight(Piece):
 
