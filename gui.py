@@ -45,11 +45,11 @@ def flushBoard(window, board):
     print(str(i) + " positions evaluated")
     if board.WhitePlayer.pieceSet.king.isInCheck():
         print("WHITE CHECKED")
-        if len(moves.Position(board.WhitePlayer, board.squares).computePossibleMoves) is 0:
+        if len(moves.Position(board.WhitePlayer, board.squares).computePossibleMoves()) is 0:
             print("WHITE IS MATED")
     if board.BlackPlayer.pieceSet.king.isInCheck():
         print("BLACK CHECKED")
-        if len(moves.Position(board.BlackPlayer, board.squares).computePossibleMoves) is 0:
+        if len(moves.Position(board.BlackPlayer, board.squares).computePossibleMoves()) is 0:
             print("BLACK IS MATED")
 
 def clickIsOnTheChessboard(event):

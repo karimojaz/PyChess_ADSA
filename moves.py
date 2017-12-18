@@ -25,7 +25,7 @@ class Position:
                     capturedPiece = None
                     if s.occupyingPiece is not None and s.occupyingPiece.owner.color is not self.player.color:
                         capturedPiece = s.occupyingPiece
-                        self.player.b.getOpponent(self.player).pieceSet.allPieces.remove(capturedPiece)
+                        self.player.b.getOpponent(self.player).pieceSet.erase(capturedPiece)
                     oldSquare = p.square
                     oldSquare.occupyingPiece = None
                     p.square = s

@@ -36,7 +36,7 @@ class Player:
         cs = []
         for p in self.pieceSet.allPieces:
             for s in self.b.squares:
-                if s not in cs and p.controls(s) and (s.occupyingPiece is None or s.occupyingPiece.owner is not self):
+                if s not in cs and p.controls(s) and s.occupyingPiece is not p:
                     cs.append(s)
         return cs
 
@@ -72,6 +72,12 @@ class PieceSet:
             self.bishops.append(p)
         elif isinstance(p, pieces.Rook):
             self.rooks.append(p)
+
+    def erase(self, p):
+        for piece in self.allPieces:
+            if piece == p:
+                self.allPieces.remove(piece)
+                return
 
 class Board:
 
