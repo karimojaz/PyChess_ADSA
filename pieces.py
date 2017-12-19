@@ -13,8 +13,9 @@ class Piece:
         self.hasMoved = False
 
     def moveTo(self, newSquare):
+        moved = False
         if newSquare is not self.square:
-            self.hasMoved = True
+            moved = True
         elif self.owner.pieceSet.king.isInCheck():
             return
         capturedPiece = None
@@ -28,6 +29,7 @@ class Piece:
         self.xpos = self.square.xpos
         self.ypos = self.square.ypos
         if self.owner.pieceSet.king.isInCheck():
+            moved = False
             self.square.occupyingPiece = capturedPiece
             self.square = oldSquare
             self.square.occupyingPiece = self
@@ -37,6 +39,7 @@ class Piece:
             if capturedPiece is not None:
                 if capturedPiece.owner.color is not self.owner.color:
                     self.owner.b.getOpponent(self.owner).pieceSet.add(capturedPiece)
+        self.hasMoved = moved or self.hasMoved
 
 class Pawn(Piece):
 
@@ -195,6 +198,8 @@ class Bishop(Piece):
             p = board.getFirstOccupiedSquareTowards(direction, self, self.owner.b)
             if p.square is  s:
                 return True
+            if p is not None:
+                print(self.owner.color + str(self) + " controls " + str(p.square) +"\n")
         return False
 
 class Queen(Piece):
@@ -255,10 +260,37 @@ class Queen(Piece):
         return False
 
     def controls(self, s):
-        if s is self.square:
-            return False
-        if self.isMoveLegal(self.square, s):
+        if self.isMoveLegal(self.square, s) and s is not self.square:
             return True
+        elif self.square.xpos is s.xpos or self.square.ypos is s.ypos:
+            if self.square.xpos > s.xpos:
+                direction = "l"
+            elif self.square.xpos < s.xpos:
+                direction = "r"
+            elif self.square.ypos > s.ypos:
+                direction = "dwn"
+            elif self.square.ypos < s.ypos:
+                direction = "up"
+            else:
+                return False
+            p = board.getFirstOccupiedSquareTowards(direction, self, self.owner.b)
+            if p.square is  s:
+                return True
+        elif (abs(s.xpos - self.square.xpos) is abs(s.ypos - self.square.ypos)):
+            if self.square.xpos > s.xpos and self.square.ypos > s.ypos:
+                direction = "ldwn"
+            elif self.square.xpos > s.xpos and self.square.ypos < s.ypos:
+                direction = "lup"
+            elif self.square.xpos < s.xpos and self.square.ypos > s.ypos:
+                direction = "rdwn"
+            elif self.square.xpos < s.xpos and self.square.ypos < s.ypos:
+                direction = "rup"
+            else:
+                return False
+            p = board.getFirstOccupiedSquareTowards(direction, self, self.owner.b)
+            if p.square is  s:
+                return True
+        return False
 
 class King(Piece):
 

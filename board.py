@@ -36,9 +36,8 @@ class Player:
         cs = []
         for p in self.pieceSet.allPieces:
             for s in self.b.squares:
-                if s not in cs and p.controls(s):
+                if p.controls(s):
                     cs.append(s)
-                    print(str(s) + " by " + str(p))
         return cs
 
 class PieceSet:
