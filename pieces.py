@@ -255,7 +255,10 @@ class Queen(Piece):
         return False
 
     def controls(self, s):
-        return self.isMoveLegal(self.square, s)
+        if s is self.square:
+            return False
+        if self.isMoveLegal(self.square, s):
+            return True
 
 class King(Piece):
 
@@ -271,7 +274,13 @@ class King(Piece):
         return False
 
     def controls(self, s):
-        return self.isMoveLegal(self.square, s)
+        if s is self.square:
+            return False
+        if self.isMoveLegal(self.square, s):
+            return True
+        if abs(s.xpos - self.square.xpos) < 2 and abs(s.ypos - self.square.ypos) < 2:
+            return True
+        return False
 
     def isInCheck(self):
         return self.square in self.owner.b.getOpponent(self.owner).getControlledSquares()
