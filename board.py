@@ -36,9 +36,9 @@ class Player:
         cs = []
         for p in self.pieceSet.allPieces:
             for s in self.b.squares:
-                if s not in cs and p.controls(s) and s.occupyingPiece is not p:
+                if s not in cs and p.controls(s):
                     cs.append(s)
-        return cs
+        return list(set(cs))
 
 class PieceSet:
 

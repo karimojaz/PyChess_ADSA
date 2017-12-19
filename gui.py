@@ -42,15 +42,23 @@ def flushBoard(window, board):
     for m in moves.Position(board.currentPlayer, board.squares).computePossibleMoves():
         print(m)
         i+=1
-    print(str(i) + " positions evaluated")
-    if board.WhitePlayer.pieceSet.king.isInCheck():
+    print(str(i) + " possible moves computed")
+
+    if len(moves.Position(board.WhitePlayer, board.squares).computePossibleMoves()) == 0:
+        if board.WhitePlayer.pieceSet.king.isInCheck():
+            print("WHITE MATED")
+        else:
+            print("PAT")
+    elif board.WhitePlayer.pieceSet.king.isInCheck():
         print("WHITE CHECKED")
-        if len(moves.Position(board.WhitePlayer, board.squares).computePossibleMoves()) is 0:
-            print("WHITE IS MATED")
-    if board.BlackPlayer.pieceSet.king.isInCheck():
+
+    if len(moves.Position(board.BlackPlayer, board.squares).computePossibleMoves()) == 0:
+        if board.BlackPlayer.pieceSet.king.isInCheck():
+            print("BLACK MATED")
+        else:
+            print("PAT")
+    elif board.BlackPlayer.pieceSet.king.isInCheck():
         print("BLACK CHECKED")
-        if len(moves.Position(board.BlackPlayer, board.squares).computePossibleMoves()) is 0:
-            print("BLACK IS MATED")
 
 def clickIsOnTheChessboard(event):
     return (event.pos[0] > CONST_BOARD_OFFSET and event.pos[0] <= (CONST_BOARD_OFFSET + 8 * CONST_SQUARE_DIM) and event.pos[1] > CONST_BOARD_OFFSET and event.pos[1] <= (CONST_BOARD_OFFSET + 8 * CONST_SQUARE_DIM))

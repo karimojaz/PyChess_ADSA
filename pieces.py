@@ -104,7 +104,21 @@ class Rook(Piece):
     def controls(self, s):
         if self.isMoveLegal(self.square, s) and s is not self.square:
             return True
-        
+        elif self.square.xpos is s.xpos or self.square.ypos is s.ypos:
+            if self.square.xpos > s.xpos:
+                direction = "l"
+            elif self.square.xpos < s.xpos:
+                direction = "r"
+            elif self.square.ypos > s.ypos:
+                direction = "dwn"
+            elif self.square.ypos < s.ypos:
+                direction = "up"
+            else:
+                return False
+            p = board.getFirstOccupiedSquareTowards(direction, self, self.owner.b)
+            if p.square is  s:
+                return True
+        return False
 
 class Knight(Piece):
 
@@ -121,7 +135,11 @@ class Knight(Piece):
         return False
 
     def controls(self, s):
-        return self.isMoveLegal(self.square, s)
+        if self.isMoveLegal(self.square, s) and s is not self.square:
+            return True
+        if (abs(s.ypos - self.square.ypos) is 2 and abs(s.xpos - self.square.xpos) is 1) or (abs(s.ypos - self.square.ypos) is 1 and abs(s.xpos - self.square.xpos) is 2):
+            return True
+        return False
 
 class Bishop(Piece):
 
@@ -161,7 +179,23 @@ class Bishop(Piece):
         return False
 
     def controls(self, s):
-        return self.isMoveLegal(self.square, s)
+        if self.isMoveLegal(self.square, s) and s is not self.square:
+            return True
+        elif (abs(s.xpos - self.square.xpos) is abs(s.ypos - self.square.ypos)):
+            if self.square.xpos > s.xpos and self.square.ypos > s.ypos:
+                direction = "ldwn"
+            elif self.square.xpos > s.xpos and self.square.ypos < s.ypos:
+                direction = "lup"
+            elif self.square.xpos < s.xpos and self.square.ypos > s.ypos:
+                direction = "rdwn"
+            elif self.square.xpos < s.xpos and self.square.ypos < s.ypos:
+                direction = "rup"
+            else:
+                return False
+            p = board.getFirstOccupiedSquareTowards(direction, self, self.owner.b)
+            if p.square is  s:
+                return True
+        return False
 
 class Queen(Piece):
 
