@@ -1,6 +1,7 @@
 import pygame
 import moves
 import tkinter
+from tkinter import *
 from tkinter import messagebox
 
 CONST_BOARD_OFFSET = 68
@@ -49,6 +50,9 @@ def flushBoard(window, board):
     if len(moves.Position(board.WhitePlayer, board.squares).computePossibleMoves()) == 0:
         if board.WhitePlayer.pieceSet.king.isInCheck():
             print("WHITE MATED")
+            Tk().wm_withdraw()
+            messagebox.showinfo('Game over', 'White is checkmated. Black wins !')
+            exit()
         else:
             print("PAT")
     elif board.WhitePlayer.pieceSet.king.isInCheck():
@@ -57,6 +61,9 @@ def flushBoard(window, board):
     if len(moves.Position(board.BlackPlayer, board.squares).computePossibleMoves()) == 0:
         if board.BlackPlayer.pieceSet.king.isInCheck():
             print("BLACK MATED")
+            Tk().wm_withdraw()
+            messagebox.showinfo('Game over', 'Black is checkmated. White wins !')
+            exit()
         else:
             print("PAT")
     elif board.BlackPlayer.pieceSet.king.isInCheck():
