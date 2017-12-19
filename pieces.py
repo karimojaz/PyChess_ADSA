@@ -198,8 +198,6 @@ class Bishop(Piece):
             p = board.getFirstOccupiedSquareTowards(direction, self, self.owner.b)
             if p.square is  s:
                 return True
-            if p is not None:
-                print(self.owner.color + str(self) + " controls " + str(p.square) +"\n")
         return False
 
 class Queen(Piece):

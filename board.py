@@ -34,9 +34,9 @@ class Player:
 
     def getControlledSquares(self):
         cs = []
-        for p in self.pieceSet.allPieces:
+        for p in self.pieceSet.getAllPieces():
             for s in self.b.squares:
-                if p.controls(s):
+                if s not in cs and p.controls(s):
                     cs.append(s)
         return cs
 
@@ -74,10 +74,33 @@ class PieceSet:
             self.rooks.append(p)
 
     def erase(self, p):
-        for piece in self.allPieces:
-            if piece == p:
-                self.allPieces.remove(piece)
-                return
+        if isinstance(p, pieces.King):
+            self.king = None
+        elif isinstance(p, pieces.Queen):
+            self.queen = None
+        elif isinstance(p, pieces.Pawn):
+            self.pawns.remove(p)
+        elif isinstance(p, pieces.Knight):
+            self.knights.remove(p)
+        elif isinstance(p, pieces.Bishop):
+            self.bishops.remove(p)
+        elif isinstance(p, pieces.Rook):
+            self.rooks.remove(p)
+        self.updateAllPiecesCollection()
+        for p in self.allPieces:
+            if p is None:
+                self.allPieces.remove(p)
+
+    def updateAllPiecesCollection(self):
+        self.allPieces = self.pawns + self.bishops + self.knights + self.rooks
+        if self.queen is not None:
+            self.allPieces = self.allPieces + [self.queen]
+        if self.king is not None:
+            self.allPieces = self.allPieces + [self.king]
+
+    def getAllPieces(self):
+        self.updateAllPiecesCollection()
+        return self.allPieces
 
 class Board:
 

@@ -1,5 +1,7 @@
 import pygame
 import moves
+import tkinter
+from tkinter import messagebox
 
 CONST_BOARD_OFFSET = 68
 CONST_SQUARE_DIM = 82
