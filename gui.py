@@ -50,24 +50,27 @@ def flushBoard(window, board):
     if len(moves.Position(board.WhitePlayer, board.squares).computePossibleMoves()) == 0:
         if board.WhitePlayer.pieceSet.king.isInCheck():
             print("WHITE MATED")
-            Tk().wm_withdraw()
-            messagebox.showinfo('Game over', 'White is checkmated. Black wins !')
-            exit()
+            displayPopupAndQuit('Game over', 'White is checkmated. Black wins !')
         else:
             print("PAT")
+            displayPopupAndQuit('Game over', 'Stalemate ! Game is a draw.')
     elif board.WhitePlayer.pieceSet.king.isInCheck():
         print("WHITE CHECKED")
 
     if len(moves.Position(board.BlackPlayer, board.squares).computePossibleMoves()) == 0:
         if board.BlackPlayer.pieceSet.king.isInCheck():
             print("BLACK MATED")
-            Tk().wm_withdraw()
-            messagebox.showinfo('Game over', 'Black is checkmated. White wins !')
-            exit()
+            displayPopupAndQuit('Game over', 'Black is checkmated. White wins !')
         else:
             print("PAT")
+            displayPopupAndQuit('Game over', 'Stalemate ! Game is a draw.')
     elif board.BlackPlayer.pieceSet.king.isInCheck():
         print("BLACK CHECKED")
+
+def displayPopupAndQuit(title, content):
+    Tk().wm_withdraw()
+    messagebox.showinfo(title, content)
+    exit()
 
 def clickIsOnTheChessboard(event):
     return (event.pos[0] > CONST_BOARD_OFFSET and event.pos[0] <= (CONST_BOARD_OFFSET + 8 * CONST_SQUARE_DIM) and event.pos[1] > CONST_BOARD_OFFSET and event.pos[1] <= (CONST_BOARD_OFFSET + 8 * CONST_SQUARE_DIM))

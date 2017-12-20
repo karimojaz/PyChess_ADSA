@@ -1,6 +1,5 @@
 import pieces
 import board
-import copy
 
 class Move:
 
